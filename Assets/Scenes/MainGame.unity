@@ -548,8 +548,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 461785507}
-  - component: {fileID: 461785509}
-  - component: {fileID: 461785508}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -573,46 +571,6 @@ Transform:
   - {fileID: 830553664}
   m_Father: {fileID: 935581983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &461785508
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 461785506}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &461785509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 461785506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e46e8393e696394895b764190fcfce5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minRotateAngle: -90
-  maxRotateAngle: 90
-  rotateSpeed: 20
-  detectionProgress: 0
-  detected: 0
-  tiltAngle: -21.184
-  detectedPlayer: {fileID: 0}
 --- !u!1 &830553663
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,14 +598,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830553663}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.89, y: 0.34, z: 0.34}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2114068029}
   m_Father: {fileID: 461785507}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!65 &830553665
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -841,6 +799,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 935581983}
+  - component: {fileID: 935581985}
+  - component: {fileID: 935581984}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -865,6 +825,48 @@ Transform:
   - {fileID: 461785507}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &935581984
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935581982}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 7
+  m_Center: {x: 0, y: -3, z: 0}
+--- !u!114 &935581985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935581982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e46e8393e696394895b764190fcfce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camHat: {fileID: 461785506}
+  minRotateAngle: 0
+  maxRotateAngle: 180
+  rotateSpeed: 15
+  rotatResetSpeed: 3
+  detectionProgress: 0
+  detected: 0
+  tiltAngle: 0
+  detectedPlayer: {fileID: 0}
 --- !u!1 &1253182057
 GameObject:
   m_ObjectHideFlags: 0

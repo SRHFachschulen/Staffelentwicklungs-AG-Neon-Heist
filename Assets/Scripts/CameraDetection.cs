@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class CameraDetection : MonoBehaviour
 {
+    [SerializeField] private GameObject camHat;
     [SerializeField] private float minRotateAngle;
     [SerializeField] private float maxRotateAngle;
     [SerializeField] private float rotateSpeed;
+    [SerializeField] private float rotatResetSpeed;
     [SerializeField] private float detectionProgress;
     [SerializeField] private bool detected;
     [SerializeField] private float tiltAngle;
     [SerializeField] private GameObject detectedPlayer;
+
 
     private SphereCollider detectionArea;
 
@@ -22,11 +25,15 @@ public class CameraDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (detectionProgress < 0.05)
+        if (detectionProgress <= 0.05)
         {
+            if(rotatResetSpeed < rotateSpeed)
+                rotatResetSpeed += Time.deltaTime * 2f;
+            else rotatResetSpeed = rotateSpeed;
             // Rotate the camera within the specified angle limits and player enters the detection area the; cameras rotation will follow the player using the skalar product and update the detection progress and detected variables
             float rotationAngle = Mathf.PingPong(Time.time * rotateSpeed, maxRotateAngle - minRotateAngle) + minRotateAngle;
-            transform.rotation = Quaternion.Euler(0, rotationAngle, tiltAngle);
+            Quaternion euler = Quaternion.Euler(0, rotationAngle, tiltAngle);
+            camHat.transform.rotation =Quaternion.Slerp(camHat.transform.rotation, euler, Time.deltaTime * rotatResetSpeed);
         }
 
         if (detectedPlayer != null)
@@ -34,15 +41,15 @@ public class CameraDetection : MonoBehaviour
             float dot = Vector3.Dot(transform.position, detectedPlayer.transform.position);
             Debug.Log("Dot product: " + dot);
 
-            if (dot > 126f && dot < 176f)
+            if (dot > minRotateAngle && dot < maxRotateAngle)
             {
                 // If the player is detected, increment the detection progress
                 detectionProgress += Time.deltaTime;
                 detected = true;
                 // rotate the camera towards the player
-                Vector3 directionToPlayer = (detectedPlayer.transform.position - transform.position).normalized;
+                Vector3 directionToPlayer = (detectedPlayer.transform.position - camHat.transform.position).normalized;
                 Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+                camHat.transform.rotation = Quaternion.Slerp(camHat.transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
 
             }
             else
@@ -50,6 +57,7 @@ public class CameraDetection : MonoBehaviour
                 // If the player is not detected, reset detection progress
                 detectionProgress = 0f;
                 detected = false;
+                rotatResetSpeed = 1f;
             }
 
         }
@@ -74,6 +82,7 @@ public class CameraDetection : MonoBehaviour
             detectedPlayer = null;
             detectionProgress = 0f;
             detected = false;
+            rotatResetSpeed = 1f;
         }
     }
 
